@@ -4,7 +4,9 @@ simple django site
 for start project:
 
 <code>pip install -r requirements.txt </code>
+
 <code>python manage.py migrate</code>
+
 <code>python manage.py runserver</code>
 
 
