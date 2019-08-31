@@ -1,0 +1,55 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %}{{ block.super }} | {{ object.title }}{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2 col-sm-12">
+        <div class="row">
+            <div class="col-md-6">
+                <img class="img-responsive well" src="{{ object.image.url }}" alt="">
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <div style="margin-top: 12px;">
+                        <span class="label label-primary label-big">{{ object.title }}</span>
+                        <br>
+                        <br>
+
+                        <span class="label label-danger label-big">{{ object.date }}</span>
+                    </div>
+                    
+                </div>
+            </div>
+            <br>
+        </div>
+        <div class="row">
+        	<div class="col-md-12">
+				<ul class="list-group">
+					<li class="list-group-item">
+						<strong>نویسنده: {{ object.user }}</strong>
+					</li>
+
+					<li class="list-group-item">
+						<h4><strong>{{ object.title }}:</strong></h4>
+						<div class="well" style="text-align: justify;">
+							{{ object.description|safe }}
+						</div>
+					</li>
+                    {% if object.postfile_set.all %}
+                            <li class="list-group-item">
+                                <strong>فایل های پیوست شده:</strong>
+                        {% for files in object.postfile_set.all %}
+                                <a href="{{ files.file.url }}">دانلودفایل{{ forloop.counter }} با حجم :{{files.file.size|filesizeformat}}</a>,
+                        {% endfor %}
+                            </li>
+                    {% endif %}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

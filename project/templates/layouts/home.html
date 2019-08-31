@@ -1,0 +1,143 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %}{{ block.super }} | خانه{% endblock %}
+{% block content %}
+{% if slides.count > 0 %}
+<div id="myCarousel" class="carousel slide" data-ride="carousel" style="width: 100% !important;">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        {% for slide in slides %}
+            <li data-target="#myCarousel" data-slide-to="{{ forloop.counter0 }}" {% if slide.active %}class="active"{% endif %}></li>
+        {% endfor %}
+    </ol>
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+        {% for slide in slides %}
+        
+            <div class="item{% if slide.active %} active{% endif %}">
+                <a href="{{ slide.url }}">
+                    <img src="{{ slide.image.url }}" alt="{{ slide.title }}" class="slider" >
+                </a>
+                <div class="carousel-caption">
+                    {% if slide.title %}
+                        <h3>{{ slide.title|safe }}</h3>
+                    {% endif %}
+                    {% if slide.description %}
+                        <p>{{ slide.description|safe }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+<div class="row" style="margin-top: 100px;">
+<!-- Right Section for films, theaters and concerts -->
+    <div class="col-md-9">
+        <!-- Films -->
+        <div class="row">
+            <div class="col-md-12 header-bottom">
+                <h2 class="text-muted header">مقالات علمی</h2>
+                <a class="btn more pull-left" href="{% url 'post_list' kind='pa'%}">مشاهده مقاله های های بیشتر ...</a>
+            </div>
+        </div>
+        <div class="row">
+            {% for paper in papers %}
+                <div class="col-md-3 col-sm-4 col-xs-6">
+                    <div class="space">
+                    {% comment %} <a href="{% url 'tickets:film_detail' pk=film.pk %}"> {% endcomment %}
+                        <img class="img-thumbnail img-responsive thumbnail cover-home" src="{{ paper.image.url }}" alt="{{ paper.title }}">
+                    {% comment %} </a> {% endcomment %}
+                    </div>
+                    <div class="text-center space">
+                        <strong>{{ paper.title }}</strong>
+                    </div>
+                    <div class="text-center space">{{ paper.director }}</div>
+                    <div class="text-center space">
+                        <a class="btn btn-primary" href="{% url 'post_details' id=paper.pk %}">
+                        مشاهده
+                        </a>
+                    </div>
+                </div>   
+            {% endfor %}
+        </div>
+        <hr>
+        <!-- Theaters -->
+        <div class="row">
+            <div class="col-md-12 header-top header-bottom">
+                <h2 class="text-muted header">ژورنال ها و مجلات</h2>
+                <a class="btn more pull-left" href="{% url 'post_list' kind='jo'%}">مشاهده مجله های بیشتر ...</a>
+            </div>
+        </div>
+        <div class="row">
+            {% for journal in journals %}
+                <div class="col-md-3 col-sm-4 col-xs-6">
+                    <div class="space">
+                    <a href="{% url 'post_details' id=journal.pk %}">
+                        <img class="img-thumbnail img-responsive thumbnail cover-home" src="{{ journal.image.url }}" alt="{{ journal.title }}">
+                    </a>
+                    </div>
+                    <div class="text-center space">
+                        <strong>{{ journal.title }}</strong>
+                    </div>
+                    <div class="text-center space">
+                        <a class="btn btn-primary" href="{% url 'post_details' id=journal.pk %}">مشاهده</a>
+                    </div>
+                </div>   
+            {% endfor %}
+        </div>
+        <hr>
+        <!-- Concerts -->
+        <div class="row">
+            <div class="col-md-12 header-top header-bottom">
+                <h2 class="text-muted header">اخبار</h2>
+                <a class="btn more pull-left" href="{% url 'post_list' kind='ne'%}">مشاهده اخبار  های بیشتر ...</a>
+            </div>
+        </div>
+        <div class="row">
+            {% for n in news %}
+                <div class="col-md-3 col-sm-4 col-xs-6">
+                    <div class="space">
+                        <img class="img-thumbnail img-responsive thumbnail cover-home" src="{{ n.image.url }}" alt="{{ n.title }}">
+                    </div>
+                    <div class="text-center space">
+                        <strong>{{ n.title }}</strong>
+                    </div>
+                    <div class="text-center space">
+                        <a class="btn btn-primary" href="{% url 'post_details' id=n.id %}">
+                        مشاهده
+                        </a>
+                    </div>
+                </div>   
+            {% endfor %}
+        </div>
+    </div>
+<!-- Left Section for news and other logos -->
+    <div class="col-md-3">
+        <div class="row">
+            <div class="col-md-12 well">
+                <div class="text-center">
+                    <h3 class="text-muted"><strong> برنامه های کاربردی</strong></h3>
+                </div>
+                {% for p in programs %}
+                    <div class="space">
+                        <img src="{% static 'img/news-icon.jpg' %}">
+                        <a href="{% url 'post_details' id=p.pk %}">
+                            {{ p.title }}
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 space">
+                {% comment %} {% block advertisement %}
+                    {% include "layouts/advertisement.html" %}
+                {% endblock %} {% endcomment %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+{% endblock %}
