@@ -2,3 +2,4 @@ django-ckeditor
 django
 django-crispy-forms
 django-tinymce
+pillow
