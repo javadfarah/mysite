@@ -1,4 +1,4 @@
-# mysite
+# simple-django-site
 simple django site
 
 for start project:
